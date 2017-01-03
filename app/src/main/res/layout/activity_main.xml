@@ -11,7 +11,23 @@
     tools:context="br.com.danieljunior.deolhonaescola.MainActivity">
 
     <TextView
+        android:id="@+id/choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/choose_option"
+        android:textStyle="bold"
+        android:textSize="18dp"/>
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/choose"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+    </GridView>
 </RelativeLayout>

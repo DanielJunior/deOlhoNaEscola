@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">De olho na Escola</string>
+    <string name="choose_option">Escolha uma opção:</string>
+    <string name="home">Home</string>
 </resources>
