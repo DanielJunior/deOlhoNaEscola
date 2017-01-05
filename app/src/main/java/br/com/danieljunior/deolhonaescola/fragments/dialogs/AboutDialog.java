@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,15 +22,18 @@ public class AboutDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Sobre este aplicativo");
         builder.setIcon(R.mipmap.ic_info);
-        builder.setMessage("De olho na Escola \n\nEste é um aplicativo que tem como objetivo fornecer informações sobre " +
-                "as receitas e despesas das escolas da rede estadual de ensino do Rio de Janeiro, além de " +
-                "prover a funcionalidade de submeter uma denúncia para a ouvidoria do Estado.\n\n" +
-                "Desenvolvido por Daniel Junior.");
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.about, null));
+
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
         // Create the AlertDialog object and return it
         return builder.create();
     }
