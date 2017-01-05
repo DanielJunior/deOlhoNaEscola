@@ -10,6 +10,8 @@ import android.widget.GridView;
 import java.util.ArrayList;
 
 import br.com.danieljunior.deolhonaescola.adapters.GridViewAdapter;
+import br.com.danieljunior.deolhonaescola.fragments.dialogs.AboutDialog;
+
 
 public class MainActivity extends AppCompatActivity {
     GridView gv;
@@ -37,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.info:
-//                HERE GOES THE CODE TO INFO DIALOG
+                AboutDialog aboutDialog = new AboutDialog();
+                aboutDialog.show(getFragmentManager(), "About");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -22,6 +22,9 @@ public class GridViewAdapter extends BaseAdapter {
     Context context;
     int[] imageId;
     private static LayoutInflater inflater = null;
+    private static final int TEXT_SEARCH = 0;
+    private static final int MAP_SEARCH = 1;
+    private static final int STATISTICS = 2;
 
     public GridViewAdapter(MainActivity mainActivity, String[] actionNamesList, int[] actionsImages) {
         // TODO Auto-generated constructor stub
@@ -74,7 +77,16 @@ public class GridViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_LONG).show();
+                switch (position) {
+                    case TEXT_SEARCH:
+                        break;
+                    case MAP_SEARCH:
+                        break;
+                    case STATISTICS:
+                        break;
+                    default:
+                        Toast.makeText(context, "Essa não é uma opção válida.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
