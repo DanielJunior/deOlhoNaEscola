@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="br.com.danieljunior.deolhonaescola.TextSearchActivity">
+    <item
+        android:id="@+id/info"
+        android:icon="@drawable/ic_help_white"
+        android:title="Text to be seen by user"
+        app:showAsAction="always"/>
+</menu>

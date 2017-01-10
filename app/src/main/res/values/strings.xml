@@ -2,4 +2,7 @@
     <string name="app_name">De olho na Escola</string>
     <string name="choose_option">Escolha uma opção:</string>
     <string name="home">Home</string>
+    <string name="title_activity_text_search">Busca Textual</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

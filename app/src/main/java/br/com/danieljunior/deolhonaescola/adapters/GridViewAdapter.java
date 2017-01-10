@@ -1,6 +1,8 @@
 package br.com.danieljunior.deolhonaescola.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +11,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import br.com.danieljunior.deolhonaescola.MainActivity;
+import br.com.danieljunior.deolhonaescola.MapsActivity;
 import br.com.danieljunior.deolhonaescola.R;
+import br.com.danieljunior.deolhonaescola.TextSearchActivity;
+import br.com.danieljunior.deolhonaescola.asynctasks.LoadSchoolTask;
+import br.com.danieljunior.deolhonaescola.fragments.dialogs.NoConectivityDialog;
+import br.com.danieljunior.deolhonaescola.interfaces.LoadCallback;
+import br.com.danieljunior.deolhonaescola.models.School;
 
 /**
  * Created by danieljunior on 03/01/17.
  */
 
-public class GridViewAdapter extends BaseAdapter {
+public class GridViewAdapter extends BaseAdapter implements LoadCallback {
 
     String[] result;
     Context context;
@@ -25,6 +35,7 @@ public class GridViewAdapter extends BaseAdapter {
     private static final int TEXT_SEARCH = 0;
     private static final int MAP_SEARCH = 1;
     private static final int STATISTICS = 2;
+    ArrayList<School> listSchool;
 
     public GridViewAdapter(MainActivity mainActivity, String[] actionNamesList, int[] actionsImages) {
         // TODO Auto-generated constructor stub
@@ -54,6 +65,24 @@ public class GridViewAdapter extends BaseAdapter {
         return position;
     }
 
+    @Override
+    public void setSchoolList(ArrayList<School> listSchool) {
+        this.listSchool = listSchool;
+    }
+
+    @Override
+    public void postResult() {
+        if (listSchool.size() > 0) {
+            Intent intent = new Intent(context, MapsActivity.class);
+            intent.putExtra("list", listSchool);
+            context.startActivity(intent);
+        } else {
+            NoConectivityDialog noConectivityDialog = new NoConectivityDialog();
+            Activity activity = (Activity) context;
+            noConectivityDialog.show(activity.getFragmentManager(), "NoConectivity");
+        }
+    }
+
     public class Holder {
         TextView tv;
         ImageView img;
@@ -71,7 +100,7 @@ public class GridViewAdapter extends BaseAdapter {
 
         holder.tv.setText(result[position]);
         holder.img.setImageResource(imageId[position]);
-
+        final LoadCallback loadCallback = this;
         rowView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -79,8 +108,12 @@ public class GridViewAdapter extends BaseAdapter {
                 // TODO Auto-generated method stub
                 switch (position) {
                     case TEXT_SEARCH:
+                        Intent intent = new Intent(context, TextSearchActivity.class);
+                        context.startActivity(intent);
                         break;
                     case MAP_SEARCH:
+                        LoadSchoolTask loadSchoolTask = new LoadSchoolTask(context, loadCallback, LoadSchoolTask.ALL);
+                        loadSchoolTask.execute("");
                         break;
                     case STATISTICS:
                         break;
@@ -92,4 +125,6 @@ public class GridViewAdapter extends BaseAdapter {
 
         return rowView;
     }
+
+
 }
