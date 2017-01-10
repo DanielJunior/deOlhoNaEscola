@@ -83,15 +83,15 @@ public class LoadSchoolTask extends AsyncTask<Object, Void, Void> {
         }
         switch (type) {
             case BY_NAME:
-                return UrlConstants.API_BASE_URL_DEVELOPMENT + "/by_name?name=" + param;
+                return UrlConstants.getBaseUrl() + "/by_name?name=" + param;
             case BY_EXPENSE:
-                return UrlConstants.API_BASE_URL_DEVELOPMENT + "/by_expense?expense=" + param;
+                return UrlConstants.getBaseUrl() + "/by_expense?expense=" + param;
             case BY_INCOME:
-                return UrlConstants.API_BASE_URL_DEVELOPMENT + "/by_income?income=" + param;
+                return UrlConstants.getBaseUrl() + "/by_income?income=" + param;
             case ALL:
-                return UrlConstants.API_BASE_URL_DEVELOPMENT;
+                return UrlConstants.getBaseUrl();
             default:
-                return UrlConstants.API_BASE_URL_DEVELOPMENT;
+                return UrlConstants.getBaseUrl();
         }
     }
 
