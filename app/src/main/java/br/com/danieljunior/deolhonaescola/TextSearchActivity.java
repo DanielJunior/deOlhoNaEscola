@@ -10,17 +10,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import br.com.danieljunior.deolhonaescola.asynctasks.LoadSchoolTask;
 import br.com.danieljunior.deolhonaescola.fragments.dialogs.NoConectivityDialog;
 import br.com.danieljunior.deolhonaescola.fragments.dialogs.NoSearchResultsDialog;
 import br.com.danieljunior.deolhonaescola.fragments.dialogs.TextSearchDialog;
-import br.com.danieljunior.deolhonaescola.interfaces.LoadCallback;
+import br.com.danieljunior.deolhonaescola.interfaces.LoadSchoolCallback;
 import br.com.danieljunior.deolhonaescola.models.School;
 
-public class TextSearchActivity extends AppCompatActivity implements LoadCallback {
+public class TextSearchActivity extends AppCompatActivity implements LoadSchoolCallback {
     RadioButton rb1;
     RadioButton rb2;
     RadioButton rb3;

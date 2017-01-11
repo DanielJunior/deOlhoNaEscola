@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dip"
+        android:text="Estatísticas"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/about_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:paddingLeft="20dip"
+        android:paddingTop="10dip"
+        android:text="Nesta tela você pode visualizar gráficos com estatísticas gerais.\n
+        O eixo X dos gráficos representa a quantidade de escolas que estão numa determinada faixa,
+        enquanto o eixo Y define a faixa relacionada."
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+</LinearLayout>

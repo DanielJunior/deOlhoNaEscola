@@ -12,21 +12,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.danieljunior.deolhonaescola.MainActivity;
 import br.com.danieljunior.deolhonaescola.MapsActivity;
 import br.com.danieljunior.deolhonaescola.R;
+import br.com.danieljunior.deolhonaescola.StatisticsActivity;
 import br.com.danieljunior.deolhonaescola.TextSearchActivity;
 import br.com.danieljunior.deolhonaescola.asynctasks.LoadSchoolTask;
+import br.com.danieljunior.deolhonaescola.asynctasks.LoadStatisticsTask;
 import br.com.danieljunior.deolhonaescola.fragments.dialogs.NoConectivityDialog;
-import br.com.danieljunior.deolhonaescola.interfaces.LoadCallback;
+import br.com.danieljunior.deolhonaescola.fragments.dialogs.NoSearchResultsDialog;
+import br.com.danieljunior.deolhonaescola.interfaces.LoadSchoolCallback;
+import br.com.danieljunior.deolhonaescola.interfaces.LoadStatisticCallback;
+import br.com.danieljunior.deolhonaescola.models.CustomBarEntry;
 import br.com.danieljunior.deolhonaescola.models.School;
 
 /**
  * Created by danieljunior on 03/01/17.
  */
 
-public class GridViewAdapter extends BaseAdapter implements LoadCallback {
+public class GridViewAdapter extends BaseAdapter implements LoadSchoolCallback, LoadStatisticCallback {
 
     String[] result;
     Context context;
@@ -36,6 +42,7 @@ public class GridViewAdapter extends BaseAdapter implements LoadCallback {
     private static final int MAP_SEARCH = 1;
     private static final int STATISTICS = 2;
     ArrayList<School> listSchool;
+    ArrayList<CustomBarEntry> barEntries;
 
     public GridViewAdapter(MainActivity mainActivity, String[] actionNamesList, int[] actionsImages) {
         // TODO Auto-generated constructor stub
@@ -65,24 +72,6 @@ public class GridViewAdapter extends BaseAdapter implements LoadCallback {
         return position;
     }
 
-    @Override
-    public void setSchoolList(ArrayList<School> listSchool) {
-        this.listSchool = listSchool;
-    }
-
-    @Override
-    public void postResult() {
-        if (listSchool.size() > 0) {
-            Intent intent = new Intent(context, MapsActivity.class);
-            intent.putExtra("list", listSchool);
-            context.startActivity(intent);
-        } else {
-            NoConectivityDialog noConectivityDialog = new NoConectivityDialog();
-            Activity activity = (Activity) context;
-            noConectivityDialog.show(activity.getFragmentManager(), "NoConectivity");
-        }
-    }
-
     public class Holder {
         TextView tv;
         ImageView img;
@@ -100,7 +89,8 @@ public class GridViewAdapter extends BaseAdapter implements LoadCallback {
 
         holder.tv.setText(result[position]);
         holder.img.setImageResource(imageId[position]);
-        final LoadCallback loadCallback = this;
+        final LoadSchoolCallback loadSchoolCallback = this;
+        final LoadStatisticCallback loadStatisticCallback = this;
         rowView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -112,10 +102,12 @@ public class GridViewAdapter extends BaseAdapter implements LoadCallback {
                         context.startActivity(intent);
                         break;
                     case MAP_SEARCH:
-                        LoadSchoolTask loadSchoolTask = new LoadSchoolTask(context, loadCallback, LoadSchoolTask.ALL);
+                        LoadSchoolTask loadSchoolTask = new LoadSchoolTask(context, loadSchoolCallback, LoadSchoolTask.ALL);
                         loadSchoolTask.execute("");
                         break;
                     case STATISTICS:
+                        LoadStatisticsTask loadStatisticsTask = new LoadStatisticsTask(context, loadStatisticCallback);
+                        loadStatisticsTask.execute();
                         break;
                     default:
                         Toast.makeText(context, "Essa não é uma opção válida.", Toast.LENGTH_LONG).show();
@@ -127,4 +119,47 @@ public class GridViewAdapter extends BaseAdapter implements LoadCallback {
     }
 
 
+    @Override
+    public void setSchoolList(ArrayList<School> listSchool) {
+        this.listSchool = listSchool;
+    }
+
+    @Override
+    public void postResult() {
+        if (listSchool == null) {
+            NoConectivityDialog noConectivityDialog = new NoConectivityDialog();
+            Activity activity = (Activity) context;
+            noConectivityDialog.show(activity.getFragmentManager(), "NoConectivity");
+        } else if (listSchool.size() > 0) {
+            Intent intent = new Intent(context, MapsActivity.class);
+            intent.putExtra("list", listSchool);
+            context.startActivity(intent);
+        } else {
+            NoSearchResultsDialog searchDialog = new NoSearchResultsDialog();
+            Activity activity = (Activity) context;
+            searchDialog.show(activity.getFragmentManager(), "SearchResult");
+        }
+    }
+
+    @Override
+    public void setBarEntries(ArrayList<CustomBarEntry> entries) {
+        this.barEntries = entries;
+    }
+
+    @Override
+    public void postStatisticResult() {
+        if (barEntries == null) {
+            NoConectivityDialog noConectivityDialog = new NoConectivityDialog();
+            Activity activity = (Activity) context;
+            noConectivityDialog.show(activity.getFragmentManager(), "NoConectivity");
+        } else if (barEntries.size() > 0) {
+            Intent intent = new Intent(context, StatisticsActivity.class);
+            intent.putExtra("barEntries", barEntries);
+            context.startActivity(intent);
+        } else {
+            NoSearchResultsDialog searchDialog = new NoSearchResultsDialog();
+            Activity activity = (Activity) context;
+            searchDialog.show(activity.getFragmentManager(), "SearchResult");
+        }
+    }
 }

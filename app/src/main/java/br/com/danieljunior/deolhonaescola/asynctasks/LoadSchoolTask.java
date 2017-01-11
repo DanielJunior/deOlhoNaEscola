@@ -19,7 +19,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import br.com.danieljunior.deolhonaescola.interfaces.LoadCallback;
+import br.com.danieljunior.deolhonaescola.interfaces.LoadSchoolCallback;
 import br.com.danieljunior.deolhonaescola.models.School;
 import br.com.danieljunior.deolhonaescola.utils.JsonUtil;
 import br.com.danieljunior.deolhonaescola.utils.UrlConstants;
@@ -35,12 +35,12 @@ public class LoadSchoolTask extends AsyncTask<Object, Void, Void> {
     public static final int BY_INCOME = 3;
     public static final int ALL = 4;
 
-    LoadCallback callback;
+    LoadSchoolCallback callback;
     Context context;
     private ProgressDialog pDialog;
     int type;
 
-    public LoadSchoolTask(Context context, LoadCallback activity, int type) {
+    public LoadSchoolTask(Context context, LoadSchoolCallback activity, int type) {
         this.context = context;
         this.callback = activity;
         this.type = type;
